@@ -1,32 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getNavigationItems } from '../../api/api';
 import { NavigationItem } from '../../api/api.types';
-import { handleOnClick } from '../../helpers/utils';
+import { fillTree, handleOnClick } from '../../helpers/utils';
 import FileTreeNode from '../FileTreeNode/FileTreeNode';
 import { NavigationState, TreeNode } from './Navigation.types';
-
-
-
-function fillTree(path: string[], treeNode: TreeNode) {
-  let nextNode: TreeNode;
-
-  const node = path.shift();
-  
-  if (!node) return;
-
-  const nextKey = `${treeNode.key}/${node}`;
-
-  if (!treeNode.next.has(node)) {
-    treeNode.entries.push(node);
-    treeNode.next.set(node, new TreeNode(nextKey));
-  }
-  
-  nextNode = treeNode.next.get(node)!;
-  fillTree(path, nextNode);
-  
-  treeNode.entries.sort();
-}
-
 
 const Navigation = () => {
   const state: NavigationState = { treeNode: null, itemCount: -1 };
@@ -47,13 +24,13 @@ const Navigation = () => {
 
   }, []);
   return (value.treeNode && value.itemCount > 0 ? 
-    <ul id='fileTreeRoot' className='active'>
+    <ul id='fileTreeRoot' data-testid='fileTreeRoot' className='active'>
       <li>
         <span className='caret' onClick={handleOnClick}>root</span>
         <FileTreeNode treeNode={value.treeNode} />
       </li>
     </ul>
-    : <span>No items found</span>);
+    : <span data-testid='noItemsFound'>No items found</span>);
 };
 
 

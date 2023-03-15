@@ -5,14 +5,13 @@ export interface NavigationProps {
 }
 
 export class TreeNode {
+  // could add a data property here if we were to transform this into an IDE
   public key: string;
-  // public keys: Set<string>;
   public entries: Array<string>;
   public next: Map<string, TreeNode>;
 
   constructor(key: string = '') {
     this.key = key;
-    // this.keys = new Set();
     this.entries = [];
     this.next = new Map<string, TreeNode>();
   }

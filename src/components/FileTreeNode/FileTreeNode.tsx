@@ -7,7 +7,7 @@ const FileTreeNode = ({ treeNode }: FileTreeNodeProps) => {
   <ul className='nested'>
     {treeNode.entries.map((nodeName) => {
       const next = treeNode.next.get(nodeName);
-      return next ?  <li key={next.key}><span className='caret' onClick={handleOnClick}>{nodeName}</span><FileTreeNode treeNode={next} /> </li>
+      return next ?  <li key={next.key} data-testid={next.key}><span className='caret' onClick={handleOnClick}>{nodeName}</span><FileTreeNode treeNode={next} /> </li>
       : <li>{treeNode.key}</li>;
     })}
   </ul>
